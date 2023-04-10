@@ -35,6 +35,36 @@ app.get('/about', (req, res)=>{
     res.render('about', {title: 'About Brady', name: 'Brady'})
 })
 
+app.get('/weather', (req, res)=>{
+    if (!req.query.address){
+        return res.send({
+            error: 'You must provide a address term'
+        })
+    }
+
+    const axios = require("axios");
+    const url = `http://api.weatherstack.com/current?query=${req.query.address}&access_key=2a731f6eb8ecad08736437c7d4873e14`;
+    axios.get(url).then((r)=>{
+        console.log(r.data);
+        res.send({
+            forecast: r.data.current.weather_descriptions,
+            location: req.query.address,
+        })
+    }) 
+})
+
+app.get('/products', (req, res)=>{
+    if (!req.query.search){
+        return res.send({
+            error: 'You must provide a search term'
+        })
+    }
+
+    res.send({
+        products: []
+    })
+})
+
 app.get('/help/*', (req, res)=>{
     res.render('404', {title: 'Error 404', errorMessage: 'WTF'})
 })
