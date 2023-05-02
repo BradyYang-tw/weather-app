@@ -13,8 +13,12 @@ const getWeather = (address)=>{
         if (data.error){
             console.log(data.error);
         }else{
+            const location = document.querySelector('.location');
+            const forecast = document.querySelector('.forecast');
             console.log(data.location);
             console.log(data.forecast);
+            location.textContent = data.location;
+            forecast.textContent = data.forecast[0];
         }
     })
 })
